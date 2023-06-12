@@ -35,13 +35,22 @@ class Planner:
         # TODO BEGIN MRSS: Use map for planning
 
         # END MRSS
+        delta_X = self.map['/goal'][0]
+        delta_Y = self.map['/goal'][1]
+
+        vel_X = 0.0
+        vel_Y = 0.0
+        if delta_X > 0.2:
+            vel_X = 0.2
+        if delta_Y > 0.2:
+            vel_Y = 0.2
 
         # Twist
         self.cmd = geometry_msgs.msg.Twist()
 
         # TODO BEGIN MRSS: Update the current command
-        self.cmd.linear.x = 0.
-        self.cmd.linear.y = 0.
+        self.cmd.linear.x = vel_X
+        self.cmd.linear.y = vel_Y
         self.cmd.angular.z = 0.
         # END MRSS
 

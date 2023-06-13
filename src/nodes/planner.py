@@ -33,16 +33,38 @@ class Planner:
         self.map = json.loads(msg.data)
 
         # TODO BEGIN MRSS: Use map for planning
-
+       
+        # Attractive forces
         # END MRSS
+        delta_X = self.map["/goal"][0]
+        delta_Y = self.map["/goal"][1]
 
+        delta_Z = np.arctan2(delta_Y, delta_X)
+
+        vel_X = 0.0
+        vel_Y = 0.0
+        vel_Z = 0.0
+        if np.abs(delta_Z) > 0.3:
+            vel_Z = 0.8*np.sign(delta_Z)
+        else:
+            if np.abs(delta_X) > 0.2:
+                vel_X = 0.2*np.sign(delta_X)
+            if np.abs(delta_Y) > 0.2:
+                vel_Y = 0.2*np.sign(delta_Y)
+            vel_Z = 0.5*np.sign(delta_Z)
+        
+        # Repulsive forces
+        obs_X = self.map["/obstacle1"][0]
+        obs_Y = self.map["/obstacle1"][1]
+
+        d = np.linalg.norm(obs_X, obs_Y)
         # Twist
         self.cmd = geometry_msgs.msg.Twist()
 
         # TODO BEGIN MRSS: Update the current command
-        self.cmd.linear.x = 0.
-        self.cmd.linear.y = 0.
-        self.cmd.angular.z = 0.
+        self.cmd.linear.x = vel_X
+        self.cmd.linear.y = vel_Y
+        self.cmd.angular.z = vel_Z
         # END MRSS
 
     def spin(self):

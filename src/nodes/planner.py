@@ -50,16 +50,14 @@ class Planner:
             if d > self.vel_max:
                 vel_des = vel_des / d * self.vel_max
             return vel_des
-        
-    ####################################### OLD FUNCTION
-    # def map_callback(self, msg):
+    
+    ################################################# OLD FUNCTION
+    #  def map_callback(self, msg):
     #     self.map = json.loads(msg.data)
        
     #     # Attractive forces
     #     delta_X = self.map["/goal"][0]
     #     delta_Y = self.map["/goal"][1]
-
-    #     delta_Z = np.arctan2(delta_Y, delta_X)
 
     #     vel_X = 0.0
     #     vel_Y = 0.0
@@ -73,12 +71,20 @@ class Planner:
     #             vel_Y = 0.2*delta_Y
     #         ang_vel_Z = 0.2*delta_Z
         
-    #     # normalize velocity
-    #     vel_des = np.array([vel_X, vel_Y])
-    #     d = np.linalg.norm(np.array([vel_X, vel_Y]))
+    #     if np.abs(delta_X) > 0.05:
+    #         att_vel_X = self.k_atr*delta_X
+    #     if np.abs(delta_Y) > 0.05:
+    #         att_vel_Y = self.k_atr*delta_Y
+
+    #     # normalize it if the norm is too large
+    #     vel_des = np.array([att_vel_X, att_vel_Y])
+    #     d = np.linalg.norm(vel_des)
     #     if d > self.vel_max:
     #         vel_des = vel_des / d * self.vel_max
 
+    #     if vel_des[1] > self.vel_max_Y: # TODO: Check this one
+    #         vel_des = vel_des / vel_des[1] * self.vel_max
+        
     #     # Obstacles: repulsive forces
     #     # for obs in ['/obstacle1', '/obstacle2', '/obstacle3']:
     #     for obs in ['/obstacle1']:

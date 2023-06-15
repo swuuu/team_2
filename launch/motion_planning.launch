@@ -10,8 +10,8 @@
     <node pkg="team_2" type="map_broadcaster.py" name="map_broadcaster"/>
 
     <!--Planner-->
-    <node pkg="mrss_motion" type="planner.py"
-          name="goal_follower" ns="mrss_motion" />
+    <node pkg="team_2" type="planner.py"
+          name="goal_follower" ns="team_2" />
 
     <!--Low level Unitree controller-->
     <group if="$(arg twist)">
@@ -20,8 +20,8 @@
 
     <!--Low level RL controller-->
     <group if="$(arg rl_policy)">
-        <node pkg="mrss_motion" type="rl_policy.py"
-              name="rl_policy" ns="mrss_motion" />
+        <node pkg="team_2" type="rl_policy.py"
+              name="rl_policy" ns="team_2" />
     </group>
 
 </launch>
